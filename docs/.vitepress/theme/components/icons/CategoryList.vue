@@ -24,6 +24,7 @@ const headers = computed(() => {
   return data.categories.map(({ name, title }) => ({
     level: 2,
     link: `${linkPrefix}#${name}`,
+    count: data.categoryIconCounts[name],
     title,
   }))
 })

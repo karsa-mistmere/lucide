@@ -33,7 +33,7 @@ function onClick(event: Event) {
 
 <template>
   <ul :class="root ? 'root' : 'nested'">
-    <li v-for="{ children, link, title } in headers">
+    <li v-for="{ children, link, title, count } in headers">
       <a
         class="outline-link"
         :href="link"
@@ -41,6 +41,7 @@ function onClick(event: Event) {
         :title="title"
       >
         {{ title }}
+        <small v-if="count" class="outline-side">{{ count }}</small>
       </a>
     </li>
   </ul>
@@ -57,7 +58,8 @@ function onClick(event: Event) {
 }
 
 .outline-link {
-  display: block;
+  display: flex;
+  justify-content: space-between;
   line-height: 28px;
   color: var(--vp-c-text-2);
   white-space: nowrap;
@@ -75,5 +77,9 @@ function onClick(event: Event) {
 
 .outline-link.nested {
   padding-left: 13px;
+}
+
+.outline-side {
+  opacity: .5;
 }
 </style>

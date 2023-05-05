@@ -41,6 +41,8 @@ const pageSize = computed(() => {
 const { searchInput, searchQuery, searchQueryThrottled } = useSearchInput()
 const searchResults = useSearch(searchQueryThrottled, props.icons, [
   { name: 'name', weight: 2 },
+  { name: 'aliases', weight: 2 },
+  { name: 'categories', weight: 1 },
   { name: 'tags', weight: 1 },
 ])
 
