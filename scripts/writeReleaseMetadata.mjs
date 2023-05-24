@@ -5,11 +5,8 @@ import fs from 'fs';
 import path from 'path';
 import { readSvgDirectory } from './helpers.mjs';
 
-await fs.readdir(process.cwd(), (err, files) => {
-  files.forEach(file => {
-    console.log(file);
-  });
-});
+const files = fs.readdirSync(process.cwd());
+console.log(files);
 throw new Error();
 
 const gitTmpPath = '/tmp/lucide-icons';
