@@ -34,10 +34,9 @@ export const updateReleaseMetadataWithCommit = (metadata, date, release) => {
 };
 
 export const fetchAllReleases = async () => {
-  await simpleGit().fetch(['--tags']);
   const tags = await Promise.all(
     (
-      await simpleGit().raw('show-ref', '--tags', '-d')
+      await simpleGit().raw('ls-remote', '--tags', 'origin')
     )
       .trim()
       .split(/\n/)
