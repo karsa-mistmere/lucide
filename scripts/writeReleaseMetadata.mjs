@@ -51,6 +51,7 @@ export const fetchAllReleases = async () => {
         return { version, date };
       }),
   );
+  console.log('All available tags:', tags);
 
   return tags.filter(({ version }) => semver.valid(version));
 };
@@ -115,6 +116,7 @@ fs.promises
   .writeFile(location, JSON.stringify(releaseMetaData, null, 2), 'utf-8')
   .then(() => {
     console.log('Successfully written icon release meta cache file');
+    console.log(releaseMetaData);
   })
   .catch((error) => {
     throw new Error(`Something went wrong generating icon release meta cache file,\n ${error}`);
