@@ -34,6 +34,9 @@ export const updateReleaseMetadataWithCommit = (metadata, date, release) => {
 };
 
 export const fetchAllReleases = async () => {
+  const remotes = await simpleGit().raw('remote');
+  console.log('git remotes', remotes);
+
   const tags = await Promise.all(
     (
       await simpleGit().raw('ls-remote', '--tags', 'origin')
