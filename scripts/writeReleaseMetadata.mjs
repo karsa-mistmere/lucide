@@ -5,6 +5,13 @@ import fs from 'fs';
 import path from 'path';
 import { readSvgDirectory } from './helpers.mjs';
 
+await fs.readdir(process.cwd(), (err, files) => {
+  files.forEach(file => {
+    console.log(file);
+  });
+});
+throw new Error();
+
 const gitTmpPath = '/tmp/lucide-icons';
 if (fs.existsSync(gitTmpPath)) {
   fs.rmSync(gitTmpPath, { recursive: true, force: true });
