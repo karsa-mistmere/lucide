@@ -5,6 +5,13 @@ import fs from 'fs';
 import path from 'path';
 import { readSvgDirectory } from './helpers.mjs';
 
+const gitTmpPath = '/tmp/lucide-icons';
+if (fs.existsSync(gitTmpPath)) {
+  fs.rmSync(gitTmpPath, { recursive: true, force: true });
+}
+await simpleGit().clone('git@github.com:lucide-icons/lucide.git', gitTmpPath);
+const git = simpleGit(gitTmpPath);
+
 const currentDir = process.cwd();
 const ICONS_DIR = path.resolve(currentDir, '../icons');
 const iconJsonFiles = readSvgDirectory(ICONS_DIR, '.json');
@@ -34,15 +41,11 @@ export const updateReleaseMetadataWithCommit = (metadata, date, release) => {
 };
 
 export const fetchAllReleases = async () => {
-  const remotes = await Promise.all([
-    simpleGit().raw('status'),
-    simpleGit().raw('remote'),
-  ]);
-  console.log('git remotes', remotes);
+  await git.fetch('--tags')
 
   const tags = await Promise.all(
     (
-      await simpleGit().raw('ls-remote', '--tags', 'origin')
+      await git.raw('show-ref', '--tags', '-d')
     )
       .trim()
       .split(/\n/)
@@ -52,7 +55,7 @@ export const fetchAllReleases = async () => {
           return { version: null, date: null };
         }
         const { version = null } = semver.coerce(ref.replace('refs/tags/', '')) ?? {};
-        const date = (await simpleGit().show(['-s', '--format=%cI', commit])).trim();
+        const date = (await git.show(['-s', '--format=%cI', commit])).trim();
         return { version, date };
       }),
   );
@@ -61,7 +64,7 @@ export const fetchAllReleases = async () => {
   return tags.filter(({ version }) => semver.valid(version));
 };
 
-simpleGit().clean(CleanOptions.FORCE);
+git.clean(CleanOptions.FORCE);
 
 const findRelease = (date, releases) => {
   let closestRelease = null;
@@ -75,7 +78,7 @@ const findRelease = (date, releases) => {
 
 const fetchCommits = async (name) => {
   const file = `../icons/${name}.svg`;
-  const { all: commits = {} } = await simpleGit().log(['--reverse', '--follow', '--', file]);
+  const { all: commits = {} } = await git.log(['--reverse', '--follow', '--', file]);
   return commits;
 };
 
