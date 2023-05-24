@@ -5,13 +5,10 @@ import fs from 'fs';
 import path from 'path';
 import { readSvgDirectory } from './helpers.mjs';
 
-const gitTmpPath = '/vercel/path0/';
-/*
 if (fs.existsSync(gitTmpPath)) {
   fs.rmSync(gitTmpPath, { recursive: true, force: true });
 }
 await simpleGit().clone(`https://${process.env.GITHUB_API_KEY}@github.com/lucide-icons/lucide.git`, gitTmpPath);
-*/
 const git = simpleGit(gitTmpPath);
 
 const currentDir = process.cwd();
