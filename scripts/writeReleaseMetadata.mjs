@@ -77,7 +77,7 @@ const findRelease = (date, releases) => {
 };
 
 const fetchCommits = async (name) => {
-  const file = `../icons/${name}.svg`;
+  const file = `icons/${name}.svg`;
   const { all: commits = {} } = await git.log(['--reverse', '--follow', '--', file]);
   return commits;
 };
