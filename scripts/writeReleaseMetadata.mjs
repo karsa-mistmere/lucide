@@ -124,6 +124,7 @@ fs.promises
   .writeFile(location, JSON.stringify(releaseMetaData, null, 2), 'utf-8')
   .then(() => {
     console.log('Successfully written icon release meta cache file');
+    console.log(releaseMetaData[Object.keys(releaseMetaData)[0]]);
   })
   .catch((error) => {
     throw new Error(`Something went wrong generating icon release meta cache file,\n ${error}`);
