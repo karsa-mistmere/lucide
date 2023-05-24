@@ -34,7 +34,7 @@ export const updateReleaseMetadataWithCommit = (metadata, date, release) => {
 };
 
 export const fetchAllReleases = async () => {
-  await simpleGit().fetch(['--tags', '--all']);
+  await simpleGit().fetch(['--tags']);
   const tags = await Promise.all(
     (
       await simpleGit().raw('show-ref', '--tags', '-d')
@@ -116,7 +116,6 @@ fs.promises
   .writeFile(location, JSON.stringify(releaseMetaData, null, 2), 'utf-8')
   .then(() => {
     console.log('Successfully written icon release meta cache file');
-    console.log(releaseMetaData);
   })
   .catch((error) => {
     throw new Error(`Something went wrong generating icon release meta cache file,\n ${error}`);
