@@ -6,7 +6,12 @@
     "csandman",
     "ericfennis"
   ],
-  "use-cases": [],
+  "use-cases": [
+    "Editing a user's profile information in account settings",
+    "Updating a user's personal or contact details",
+    "Modifying a team member's role, permissions or account settings",
+    "Editing a user record in administration or user management interfaces"
+  ],
   "tags": [
     "person",
     "account",
